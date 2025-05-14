@@ -1,0 +1,21 @@
+title: Malicious Domains in Windows Host File
+id: 904cba89-fbca-4ff9-87b1-4e4d1b423e8d
+status: experimental
+description: Detects possible malicious modifications to the Wondows host file with domains conatining .ru or .cn
+author: Nathan Ramsey
+date: 2025/05/12
+logsource:
+  product: windows
+  service: sysmon
+  category: file_event
+detection:
+  selection:
+    TargetFilename|endswith: '\\Windows\\System32\\drivers\\etc\\hosts'
+    Content|contains:
+      - '.ru'
+      - '.cn'
+  condition: selection
+level: high
+tags:
+  - attack.defense_evasion
+  - hosts_file_tampering
